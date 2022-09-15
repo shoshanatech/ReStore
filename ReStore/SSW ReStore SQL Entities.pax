@@ -581,9 +581,11 @@ writeSQLOn: aStream
 	self writeSQLOn: aStream forField: (SSWSQLParameterField forValue: self)!
 
 writeSQLOn: aStream forField: aField
-
 	"Opt out of the Collection implementation"
-	^aStream nextPut: self forField: aField! !
+
+	"Change to canonicalize line endings to CRLF in the database"
+
+	^aStream nextPut: self withCrLfLineEndings forField: aField.! !
 !String categoriesForMethods!
 asSQLFunction!converting!public! !
 asSQLFunctionBooleanResult!converting!public! !

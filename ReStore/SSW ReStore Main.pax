@@ -1104,10 +1104,9 @@ withRelatedComponents!converting!public! !
 !String class methodsFor!
 
 instanceFromDBValue: aValue in: anSSWReStore
-
 	"ASSERT: aValue isNil OR aValue isKindOf: self"
 
-	^aValue! !
+	^aValue ifNotNil: [:a | a withPlatformLineEndings].! !
 !String class categoriesForMethods!
 instanceFromDBValue:in:!instance creation!public! !
 !
