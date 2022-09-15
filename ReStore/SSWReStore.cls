@@ -391,29 +391,19 @@ connection: aDBConnection
 	connection := aDBConnection!
 
 createProxyForNewObject: anObject
-
 	"Create and return a proxy for the given non-persistent object.
 	Error if no active transaction (issue#0022)"
 
-	| proxy table id |
-
-	(self hasTransaction and: [self transaction canCommit]) ifFalse:
-		[self error: 'Cannot store an object outside of a transaction'].
-
-	proxy := (self objectProxyClassFor: anObject class) _forNewObject: anObject withID: nil inReStore: self.
-
+	| proxy table |
+	(self hasTransaction and: [self transaction canCommit])
+		ifFalse: [self error: 'Cannot store an object outside of a transaction'].
 	table := self tableForClass: anObject class.
-	id := table idDataField ifNotNil: [ :idDataField | idDataField accessor valueIn: anObject].
-	id isNil 
-	ifTrue: 
-		[proxy _id: (self allocateIDFor: anObject in: table)]
-	ifFalse: 
-		[((self classCacheFor: anObject class) includesKey: id) ifTrue: [self error: 'attempt to store object of class <1d> with duplicate ID <2p>' << {anObject class. id}].
-		proxy _id: id].
-
+	proxy := (self objectProxyClassFor: anObject class)
+				_forNewObject: anObject
+				withID: (self allocateIDFor: anObject in: table)
+				inReStore: self.
 	proxy _intern.
-
-	^proxy!
+	^proxy.!
 
 createProxyForObjectOfClass: aClass withID: anInteger
 
