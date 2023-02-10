@@ -1,6 +1,6 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
-SSWDBStaticCollectionSpec subclass: #SSWDBStaticIdentitySetSpec
+SSWDBHashedStaticCollectionSpec subclass: #SSWDBStaticIdentitySetSpec
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
